@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משטרת ישראל | PG</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap');
+
+        :root {
+            --bg: #030407;
+            --surface: #0a0c12;
+            --accent: #0066ff;
+            --accent-glow: rgba(0, 102, 255, 0.4);
+            --border: rgba(255, 255, 255, 0.07);
+            --text: #ffffff;
+            --text-dim: #b1b1b1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            direction: rtl;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 15%, rgba(0, 102, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 102, 255, 0.12) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        /* Nav Bar */
+        .top-bar {
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-box {
+            border: 1px solid var(--accent);
+            padding: 8px 20px;
+            border-radius: 2px;
+            box-shadow: 0 0 20px var(--accent-glow);
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .status-tag {
+            font-size: 0.75rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            background: linear-gradient(to bottom, #fff 60%, #444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--text-dim);
+            font-weight: 300;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        /* Accordion Cards */
+        .acc-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .acc-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .acc-btn {
+            width: 100%;
+            padding: 35px 40px;
+            background: none;
+            border: none;
+            color: var(--text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: right;
+            outline: none;
+        }
+
+        .acc-label {
+            color: var(--accent);
+            font-weight: 300;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            display: block;
+            pointer-events: none;
+        }
+
+        .acc-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        .acc-icon {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            transition: 0.4s;
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        /* Active State */
+        .acc-card.active {
+            border-color: var(--accent);
+        }
+
+        .acc-card.active .acc-icon {
+            transform: rotate(45deg);
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Content Area */
+        .acc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        }
+
+        .acc-card.active .acc-content {
+            max-height: 2000px;
+            /* מספיק גבוה לכל הטקסט */
+            transition: max-height 1s ease-in-out;
+        }
+
+        .acc-inner {
+            padding: 0 40px 50px;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            border-top: 1px solid var(--border);
+            padding-top: 35px;
+        }
+
+        .acc-inner strong {
+            color: #fff;
+        }
+
+        .acc-inner p {
+            margin-bottom: 15px;
+        }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.02);
+            border-right: 4px solid var(--accent);
+            padding: 25px;
+            margin: 20px 0;
+            color: #efefef;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .footer {
+            padding: 60px;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            border-top: 1px solid var(--border);
+            direction: ltr;
+        }
+
+        .footer span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 20px;
+            }
+
+            .acc-btn {
+                padding: 25px 20px;
+            }
+
+            .acc-inner {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="top-bar">
+        <div class="logo-box">PG CENTER</div>
+        <div class="status-tag">
+            <div class="dot"></div>
+            מערכת מבצעית פעילה
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>משטרת ישראל | PG</h1>
+        <p>כל הדברים שצריך לדעת נמצאים פה בשבילכם!</p>
+    </header>
+
+    <main class="container">
+
+        <div class="acc-card">
+            <button class="acc-btn">
+                <div>
+                    <span class="acc-label">פרק 01</span>
+                    <h2 class="acc-title">איך מנהלים משא ומתן?</h2>
+                </div>
+                <div class="acc-icon">+</div>
+            </button>
+            <div class="acc-content">
+                <div class="acc-inner">
+                    <p><strong>נוהל משא ומתן</strong></p>
+                    <p>מה נשמע (עולים על קשר 500 למשא ומתן)</p>
+                    <p><strong>שלום איך יכול לקרוא לך?</strong></p>
+                    <p>לדוגמא - <strong>שימי</strong></p>
+                    <p>אני מעוניין לראות את בן הערובה</p>
+                    <p>(דברים איתו אם הוא אכל ושתה ואם הוא צריך טיפול רפואי והם דאגו לו)</p>
+                    <div class="highlight-box">
+                        <strong>תנאי משא ומתן:</strong><br>
+                        • אם אני לא רואה את הבן ערובה<br>
+                        • אם אחד משודדים מכוון על אחד מהשוטרים<br>
+                        • אם אתם מדברים על הקשר<br>
+                        • אם פותחים את טלפון/מדברים בו<br>
+                        • אם שומעים ירי שקשור אליכם<br>
+                        • אם אתם מבצעים קפיצה עם הרכב במהלך מרדף<br>
+                        • אם על קשר מומ יש יותר משודד אחד זה שבירת משא ומתן
+                    </div>
+                    <div class="data-row"><span>בן ערובה אחד דרישות:</span><strong>2 בדרך כלל</strong></div>
+                    <div class="data-row"><span>2 בני ערובה דרישות:</span><strong>3 דרישות</strong></div>
+                    <div class="data-row"><span>בן ערובה ושוטר דרישות:</span><strong>3 דרישות</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-card">
+            <button class="acc-btn">
+                <div>
+                    <span class="acc-label">פרק 02</span>
+                    <h2 class="acc-title">מה זה נדב"ר</h2>
+                </div>
+                <div class="acc-icon">+</div>
+            </button>
+            <div class="acc-content">
+                <div class="acc-inner">
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0 30px;">
+                        <div class="data-row"><span>10-3</span><span></span></div>
+                        <div class="data-row"><span>10-4</span><span>קיבלתי</span></div>
+                        <div class="data-row"><span>10-6</span><span>עסוק</span></div>
+                        <div class="data-row"><span>10-7</span><span>יוצא מתפקיד</span></div>
+                        <div class="data-row"><span>10-8</span><span>נכנס לתפקיד</span></div>
+                        <div class="data-row"><span>10-9</span><span>חזור שנית</span></div>
+                        <div class="data-row"><span>10-13</span><span>נורו יריות</span></div>
+                        <div class="data-row"><span>10-13A</span><span>נורו יריות מרכב</span></div>
+                        <div class="data-row"><span>10-20</span><span>מיקום</span></div>
+                        <div class="data-row"><span>10-32</span><span>אדם חמוש</span></div>
+                        <div class="data-row"><span>10-35</span><span>פריצת רכב</span></div>
+                        <div class="data-row"><span>10-38</span><span>עצירת תנועה שגרתית</span></div>
+                        <div class="data-row"><span>10-50</span><span>תאונה</span></div>
+                        <div class="data-row"><span>10-52</span><span>זקוק לעזרה רפואית</span></div>
+                        <div class="data-row"><span>10-60</span><span>עסקת סמים</span></div>
+                        <div class="data-row"><span>10-68</span><span>שוד</span></div>
+                        <div class="data-row"><span>10-70</span><span>מרדף רגלי</span></div>
+                        <div class="data-row"><span>10-76</span><span>מגיב</span></div>
+                        <div class="data-row"><span>10-78</span><span>זקוק לתגבורת</span></div>
+                        <div class="data-row"><span>10-80</span><span>מרדף פעיל</span></div>
+                        <div class="data-row"><span>10-95</span><span>שוד גדול</span></div>
+                        <div class="data-row"><span>10-98</span><span>בריחה מהכלא</span></div>
+                        <div class="data-row"><span>10-99</span><span style="color: #ff4444; font-weight: bold;">שוטר
+                                במצוקה</span></div>
+                        <div class="data-row"><span>100</span><span>דיווח חירום</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-card">
+            <button class="acc-btn">
+                <div>
+                    <span class="acc-label">פרק 03</span>
+                    <h2 class="acc-title">מה הם הקשרים המשטרתיים</h2>
+                </div>
+                <div class="acc-icon">+</div>
+            </button>
+            <div class="acc-content">
+                <div class="acc-inner">
+                    <div class="data-row"><span>קשר 1</span><span>קשר ראשי/קשר תחנה (לא עובד)</span></div>
+                    <div class="data-row"><span>קשר 2</span><span>קשר אירועים</span></div>
+                    <div class="data-row"><span>קשר 3</span><span>קשר שודים</span></div>
+                    <div class="data-row"><span>קשר 4</span><span>יממ</span></div>
+                    <div class="data-row"><span>קשר 5</span><span>קשר מגב</span></div>
+                    <div class="data-row"><span>קשר 6</span><span>מפקדים</span></div>
+                    <div class="data-row"><span>קשר 7</span><span>קשר פטרולים</span></div>
+                    <div class="data-row"><span>קשר 8</span><span>קשר אירועים (מבצע)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-card">
+            <button class="acc-btn">
+                <div>
+                    <span class="acc-label">פרק 04</span>
+                    <h2 class="acc-title">נוהל עצירת חשוד</h2>
+                </div>
+                <div class="acc-icon">+</div>
+            </button>
+            <div class="acc-content">
+                <div class="acc-inner">
+                    <p><strong>נוהל מעצר חשוד</strong></p>
+                    <p>בעת המעצר, ברגע שאתם אוזקים את החשוד מקריאים לו את אזהרת מירנדה, אלא אם כן אתם תחת אש:</p>
+                    <div class="highlight-box">
+                        יש לך זכות לשמור על השתיקה. כל דבר שתאמר עלול ואף ישמש נגדך בחקירה ובבית המשפט. יש לך זכות לעורך
+                        דין במידה ואין לך כסף המדינה תממן לך אחד. יש לך זכות לאוכל, שתייה, טיפול רפואי ושיחת טלפון של 60
+                        שניות בנוכחות שוטר.
+                    </div>
+                    <p>אם נדרש טיפול רפואי, מקריאים את הזכויות לאחריו. שואלים אם הבין את זכויותיו, ובמידה שלא, מקריאים
+                        שוב.</p>
+                    <p>בתחנה מבצעים חיפוש לחשוד, לוקחים חפצים מסוכנים, מכשירי קשר וטלפון, במקרה של שוד - גם את הפריטים
+                        הגנובים. מצלמים את החשוד (<strong>חשוב - ללא מסכה</strong>) ולוקחים דגימת אצבע, ומעלים לפרופיל
+                        ב־MDT.</p>
+                    <p>אחרי זה מכניסים את החשוד לתא, שמים את החפצים ב־Evidence, וממלאים את ה־Incident של האירוע.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="acc-card">
+            <button class="acc-btn">
+                <div>
+                    <span class="acc-label">פרק 05</span>
+                    <h2 class="acc-title">כמות שודדים בשודים</h2>
+                </div>
+                <div class="acc-icon">+</div>
+            </button>
+            <div class="acc-content">
+                <div class="acc-inner">
+                    <div class="data-row"><span>חנות:</span><strong>2 פושעים - 4 שוטרים</strong></div>
+                    <div class="data-row"><span>פלקה (בנק קטן):</span><strong>6 פושעים - 10 שוטרים</strong></div>
+                    <div class="data-row"><span>ונגליקו (יהלומים):</span><strong>7 פושעים - 12 שוטרים</strong></div>
+                    <div class="data-row"><span>פלטו:</span><strong>7 פושעים - 13 שוטרים</strong></div>
+                    <div class="data-row"><span>בנק גדול:</span><strong>9 פושעים - 15 שוטרים</strong></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        Developed by <span>ZICRI</span> &copy; 2026
+    </footer>
+
+    <script>
+        // המנגנון המתוקן
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.acc-btn');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const card = btn.closest('.acc-card');
+
+                    // סגירת שאר הכרטיסיות (אופציונלי - אם אתה רוצה שרק אחת תהיה פתוחה)
+                    document.querySelectorAll('.acc-card').forEach(otherCard => {
+                        if (otherCard !== card) {
+                            otherCard.classList.remove('active');
+                        }
+                    });
+
+                    // פתיחה/סגירה של הנוכחית
+                    card.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
